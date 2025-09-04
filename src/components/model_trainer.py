@@ -43,8 +43,51 @@ class ModelTrainer:
                 "AdaBoost Regressor": AdaBoostRegressor()
             }
 
+            params = {
+    "Random Forest": {
+        "n_estimators": [100, 200, 300],
+        "max_depth": [None, 5, 10, 20],
+        "min_samples_split": [2, 5, 10],
+        "min_samples_leaf": [1, 2, 4]
+    },
+    "Decision Tree": {
+        "criterion": ["squared_error", "friedman_mse", "absolute_error", "poisson"],
+        "splitter": ["best", "random"],
+        "max_depth": [None, 5, 10, 20]
+    },
+    "Gradient Boosting": {
+        "n_estimators": [100, 200, 300],
+        "learning_rate": [0.01, 0.05, 0.1],
+        "max_depth": [3, 5, 7],
+        "subsample": [0.8, 1.0]
+    },
+    "Linear Regression": {},
+    "KNeighbors Regressor": {
+        "n_neighbors": [3, 5, 7, 9],
+        "weights": ["uniform", "distance"],
+        "metric": ["euclidean", "manhattan"]
+    },
+    "XGB Regressor": {
+        "n_estimators": [100, 200, 300],
+        "learning_rate": [0.01, 0.05, 0.1],
+        "max_depth": [3, 5, 7],
+        "subsample": [0.8, 1.0],
+        "colsample_bytree": [0.8, 1.0]
+    },
+    "CatBoosting Regressor": {
+        "depth": [4, 6, 8],
+        "learning_rate": [0.01, 0.05, 0.1],
+        "iterations": [100, 200, 300]
+    },
+    "AdaBoost Regressor": {
+        "n_estimators": [50, 100, 200],
+        "learning_rate": [0.01, 0.05, 0.1]
+    }
+}
+
+
             model_report: dict = evaluate_models(
-                X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, models=models
+                X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, models=models, params=params
             )
 
             best_model_score = max(model_report.values())
